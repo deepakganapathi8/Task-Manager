@@ -1,133 +1,172 @@
-.home-container {
-  max-width: 1200px;
+.container {
+  max-width: 600px;
   margin: 0 auto;
   padding: 2rem;
 }
 
-.hero {
+h1 {
   text-align: center;
-  padding: 4rem 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-radius: 15px;
-  margin-bottom: 3rem;
-}
-
-.hero h1 {
-  font-size: 3rem;
-  margin: 0 0 1rem 0;
-}
-
-.subtitle {
-  font-size: 1.2rem;
-  max-width: 700px;
-  margin: 0 auto 2rem;
-  line-height: 1.6;
-  opacity: 0.95;
-}
-
-.cta-button {
-  display: inline-block;
-  padding: 1rem 3rem;
-  background: white;
-  color: #667eea;
-  text-decoration: none;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.cta-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
-}
-
-.features {
-  margin-bottom: 3rem;
-}
-
-.features h2 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 2rem;
   color: #333;
+  margin-bottom: 2rem;
 }
 
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-}
-
-.feature-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
+.add-btn {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: #667eea;
+  color: white;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.feature-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+.add-btn:hover {
+  background: #5568d3;
 }
 
-.feature-icon {
-  font-size: 3rem;
+.form-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.form-group {
   margin-bottom: 1rem;
 }
 
-.feature-card h3 {
-  color: #667eea;
+.form-group label {
+  display: block;
   margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
 }
 
-.feature-card p {
-  color: #666;
-  line-height: 1.6;
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
 }
 
-.concepts {
-  margin-bottom: 3rem;
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
 }
 
-.concepts h2 {
+.form-group textarea {
+  resize: vertical;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.save-btn:hover {
+  background: #5568d3;
+}
+
+.save-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.empty {
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  color: #999;
+  padding: 2rem;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.task-content {
+  flex: 1;
+}
+
+.task-content h3 {
+  margin: 0 0 0.5rem 0;
   color: #333;
 }
 
-.concepts-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+.task-content h3.completed {
+  text-decoration: line-through;
+  color: #999;
 }
 
-.concept-item {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #667eea;
-}
-
-.concept-badge {
-  display: inline-block;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  margin-bottom: 0.75rem;
-}
-
-.concept-item p {
-  color: #666;
-  line-height: 1.6;
+.task-content p {
   margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.task-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.task-actions button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s;
+}
+
+.task-actions button:first-child {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.task-actions button:first-child.done {
+  background: #4caf50;
+  color: white;
+}
+
+.delete-btn {
+  background: #f44336;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #d32f2f;
+}
+
+.task-actions button:hover {
+  transform: scale(1.1);
 }
