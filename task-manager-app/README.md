@@ -1,30 +1,21 @@
-# 📋 Task Manager - Simple Angular App
+# 📋 Task Manager
 
-A minimal single-page Angular Task Manager application.
+Minimal Angular task app in 3 files.
 
-## 🚀 Features
+## Features
 
-- ✅ Add tasks with title and description
-- ✅ Toggle tasks complete/incomplete
-- ✅ Delete tasks
-- 📱 Simple, clean UI
+- Add, complete, delete tasks
+- Inline form
 
-## 🛠️ Technologies
-
-- **Angular 17** - Standalone components
-- **TypeScript** - Type safety
-- **RxJS** - Reactive state
-- **CSS3** - Modern styling
-
-## 📁 Project Structure
+## Structure
 
 ```
-src/app/
-├── models/task.model.ts     # Task interface
-├── services/task.service.ts # State management
-├── pages/home/              # Main component
-├── app.component.*          # Root component
-└── app.config.ts            # App configuration
+src/
+├── main.ts                  # Bootstrap
+└── app/
+    ├── app.component.ts     # All logic
+    ├── app.component.html   # Template
+    └── app.component.css    # Styles
 ```
 
 ## 🏃 Getting Started

@@ -1,4 +1,26 @@
-<nav class="header">
-  <h1>📋 Task Manager</h1>
-</nav>
-<app-home></app-home>
+<div class="app">
+  <h1>📋 Tasks</h1>
+
+  <button (click)="toggleForm()">
+    {{ showForm ? '✕' : '+' }}
+  </button>
+
+  <form *ngIf="showForm" (ngSubmit)="addTask()">
+    <input [(ngModel)]="title" name="title" placeholder="Title" required>
+    <textarea [(ngModel)]="description" name="desc" placeholder="Description" rows="2"></textarea>
+    <button type="submit" [disabled]="!title.trim()">Save</button>
+  </form>
+
+  <div *ngIf="tasks.length === 0" class="empty">No tasks</div>
+
+  <div *ngFor="let task of tasks" class="task">
+    <div>
+      <h3 [class.done]="task.completed">{{ task.title }}</h3>
+      <p *ngIf="task.description">{{ task.description }}</p>
+    </div>
+    <div>
+      <button (click)="toggle(task)">{{ task.completed ? '✓' : '○' }}</button>
+      <button (click)="delete(task)">✕</button>
+    </div>
+  </div>
+</div>
