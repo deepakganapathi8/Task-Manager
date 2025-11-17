@@ -19,7 +19,7 @@
       <p *ngIf="task.description">{{ task.description }}</p>
     </div>
     <div>
-      <button (click)="toggle(task)">{{ task.completed ? '✓' : '○' }}</button>
+      <button (click)="toggle(task)">{{ task.completed ? '○' : '✓' }}</button>
       <button (click)="delete(task)">✕</button>
     </div>
   </div>
