@@ -1,0 +1,26 @@
+<div class="task-item" [class.completed]="task.completed">
+  <div class="task-checkbox">
+    <input
+      type="checkbox"
+      [checked]="task.completed"
+      (change)="onToggleStatus()"
+      [id]="'task-' + task.id"
+    />
+    <label [for]="'task-' + task.id"></label>
+  </div>
+
+  <div class="task-content">
+    <h3 [class.completed-text]="task.completed">{{ task.title }}</h3>
+    <p class="task-description">{{ task.description }}</p>
+    <div class="task-meta">
+      <span class="priority-badge" [class]="'priority-' + task.priority">
+        {{ task.priority | priorityLabel }}
+      </span>
+      <span class="task-date">{{ task.createdAt | date:'short' }}</span>
+    </div>
+  </div>
+
+  <button class="delete-btn" (click)="onDelete()" title="Delete task">
+    🗑️
+  </button>
+</div>

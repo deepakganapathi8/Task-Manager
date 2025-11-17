@@ -1,0 +1,50 @@
+<div class="task-form-container">
+  <button class="toggle-form-btn" (click)="toggleForm()">
+    {{ showForm ? '✖ Cancel' : '➕ Add New Task' }}
+  </button>
+
+  <div class="form-card" *ngIf="showForm">
+    <h2>Create New Task</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">Task Title *</label>
+        <input
+          type="text"
+          id="title"
+          [(ngModel)]="taskTitle"
+          name="title"
+          placeholder="Enter task title"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          [(ngModel)]="taskDescription"
+          name="description"
+          placeholder="Enter task description"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="priority">Priority</label>
+        <select
+          id="priority"
+          [(ngModel)]="taskPriority"
+          name="priority"
+        >
+          <option value="low">🟢 Low</option>
+          <option value="medium">🟡 Medium</option>
+          <option value="high">🔴 High</option>
+        </select>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="!taskTitle.trim()">
+        Create Task
+      </button>
+    </form>
+  </div>
+</div>
