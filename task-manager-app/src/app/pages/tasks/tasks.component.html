@@ -21,28 +21,26 @@
 
   <!-- Task List using Pipe -->
   <div class="tasks-list">
-    <ng-container *ngIf="tasks$ | async as tasks">
-      <div *ngIf="(tasks | taskFilter:currentFilter).length === 0" class="empty-state">
-        <div class="empty-icon">📭</div>
-        <h3>No tasks found</h3>
-        <p>
-          <span *ngIf="currentFilter === 'all'">Start by creating your first task!</span>
-          <span *ngIf="currentFilter !== 'all'">No tasks match the selected filter.</span>
-        </p>
-      </div>
+    <div *ngIf="(tasks | taskFilter:currentFilter).length === 0" class="empty-state">
+      <div class="empty-icon">📭</div>
+      <h3>No tasks found</h3>
+      <p>
+        <span *ngIf="currentFilter === 'all'">Start by creating your first task!</span>
+        <span *ngIf="currentFilter !== 'all'">No tasks match the selected filter.</span>
+      </p>
+    </div>
 
-      <!-- Task Items with Input/Output bindings -->
-      <app-task-item
-        *ngFor="let task of tasks | taskFilter:currentFilter"
-        [task]="task"
-        (toggleStatus)="onToggleStatus($event)"
-        (deleteTask)="onDeleteTask($event)"
-      ></app-task-item>
-    </ng-container>
+    <!-- Task Items with Input/Output bindings -->
+    <app-task-item
+      *ngFor="let task of tasks | taskFilter:currentFilter"
+      [task]="task"
+      (toggleStatus)="onToggleStatus($event)"
+      (deleteTask)="onDeleteTask($event)"
+    ></app-task-item>
   </div>
 
   <!-- Stats Section -->
-  <div class="stats" *ngIf="tasks$ | async as tasks">
+  <div class="stats">
     <div class="stat-card">
       <div class="stat-value">{{ tasks.length }}</div>
       <div class="stat-label">Total Tasks</div>

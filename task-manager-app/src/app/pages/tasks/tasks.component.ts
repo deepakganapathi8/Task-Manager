@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
 import { Task } from '../../models/task.model';
 import { TaskService } from '../../services/task.service';
 import { TaskItemComponent } from '../../shared/task-item/task-item.component';
@@ -20,7 +19,7 @@ import { TaskFilterPipe } from '../../pipes/task-filter.pipe';
   styleUrl: './tasks.component.css'
 })
 export class TasksComponent implements OnInit {
-  tasks$!: Observable<Task[]>;
+  tasks: Task[] = [];
   currentFilter: string = 'all';
 
   filters = [
@@ -35,7 +34,7 @@ export class TasksComponent implements OnInit {
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
-    this.tasks$ = this.taskService.getTasks();
+    this.tasks = this.taskService.getTasks();
   }
 
   onTaskAdded(task: Omit<Task, 'id' | 'createdAt'>): void {
