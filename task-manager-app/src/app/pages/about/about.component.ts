@@ -12,7 +12,6 @@ export class AboutComponent {
   technologies = [
     { name: 'Angular 17', description: 'Modern web framework with standalone components' },
     { name: 'TypeScript', description: 'Strongly typed programming language' },
-    { name: 'RxJS', description: 'Reactive programming with Observables' },
     { name: 'CSS3', description: 'Modern styling with animations and gradients' }
   ];
 

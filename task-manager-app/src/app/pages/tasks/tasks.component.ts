@@ -39,15 +39,18 @@ export class TasksComponent implements OnInit {
 
   onTaskAdded(task: Omit<Task, 'id' | 'createdAt'>): void {
     this.taskService.addTask(task);
+    this.tasks = this.taskService.getTasks();
   }
 
   onToggleStatus(taskId: number): void {
     this.taskService.toggleTaskStatus(taskId);
+    this.tasks = this.taskService.getTasks();
   }
 
   onDeleteTask(taskId: number): void {
     if (confirm('Are you sure you want to delete this task?')) {
       this.taskService.deleteTask(taskId);
+      this.tasks = this.taskService.getTasks();
     }
   }
 

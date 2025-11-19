@@ -5,37 +5,12 @@ import { Task } from '../models/task.model';
   providedIn: 'root'
 })
 export class TaskService {
-  private tasks: Task[] = [
-    {
-      id: 1,
-      title: 'Complete Angular Tutorial',
-      description: 'Learn about components, routing, and services',
-      priority: 'high',
-      completed: false,
-      createdAt: new Date('2025-11-15')
-    },
-    {
-      id: 2,
-      title: 'Build Task Manager App',
-      description: 'Implement all features with best practices',
-      priority: 'high',
-      completed: false,
-      createdAt: new Date('2025-11-16')
-    },
-    {
-      id: 3,
-      title: 'Review Code',
-      description: 'Check for any improvements',
-      priority: 'medium',
-      completed: true,
-      createdAt: new Date('2025-11-14')
-    }
-  ];
+  private tasks: Task[] = [];
 
   constructor() { }
 
   getTasks(): Task[] {
-    return this.tasks;
+    return [...this.tasks];
   }
 
   addTask(task: Omit<Task, 'id' | 'createdAt'>): void {
