@@ -1,11 +1,6 @@
 <div class="task-item" [class.completed]="task.completed">
   <div class="task-checkbox">
-    <input
-      type="checkbox"
-      [checked]="task.completed"
-      (change)="onToggleStatus()"
-      [id]="'task-' + task.id"
-    />
+    <input type="checkbox" [checked]="task.completed" (change)="onToggleStatus()" [id]="'task-' + task.id" />
     <label [for]="'task-' + task.id"></label>
   </div>
 
@@ -20,7 +15,7 @@
     </div>
   </div>
 
-  <button class="delete-btn" (click)="onDelete()" title="Delete task">
+  <button class="delete-btn" (click)="onDelete($event)" title="Delete task">
     🗑️
   </button>
 </div>

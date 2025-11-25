@@ -11,7 +11,7 @@ import { Task } from '../../models/task.model';
   styleUrl: './task-form.component.css'
 })
 export class TaskFormComponent {
-  @Output() taskAdded = new EventEmitter<Omit<Task, 'id' | 'createdAt'>>();
+  @Output() taskAdded = new EventEmitter<Omit<Task, 'id' | 'userId' | 'createdAt' | 'updatedAt'>>();
 
   taskTitle = '';
   taskDescription = '';

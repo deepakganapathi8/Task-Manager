@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { Task } from '../../models/task.model';
 import { TaskService } from '../../services/task.service';
 import { TaskItemComponent } from '../../shared/task-item/task-item.component';
@@ -18,9 +19,12 @@ import { TaskFilterPipe } from '../../pipes/task-filter.pipe';
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
   currentFilter: string = 'all';
+  isLoading = false;
+  error: string | null = null;
+  private tasksSubscription?: Subscription;
 
   filters = [
     { value: 'all', label: 'All Tasks' },
@@ -31,26 +35,58 @@ export class TasksComponent implements OnInit {
     { value: 'low', label: '🟢 Low Priority' }
   ];
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService) { }
 
   ngOnInit(): void {
-    this.tasks = this.taskService.getTasks();
+    // Subscribe to real-time tasks
+    this.tasksSubscription = this.taskService.getTasks$().subscribe({
+      next: (tasks) => {
+        this.tasks = tasks;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading tasks:', err);
+        this.error = 'Failed to load tasks. Please try again.';
+        this.isLoading = false;
+      }
+    });
   }
 
-  onTaskAdded(task: Omit<Task, 'id' | 'createdAt'>): void {
-    this.taskService.addTask(task);
-    this.tasks = this.taskService.getTasks();
+  ngOnDestroy(): void {
+    // Unsubscribe to prevent memory leaks
+    this.tasksSubscription?.unsubscribe();
   }
 
-  onToggleStatus(taskId: number): void {
-    this.taskService.toggleTaskStatus(taskId);
-    this.tasks = this.taskService.getTasks();
+  async onTaskAdded(task: Omit<Task, 'id' | 'userId' | 'createdAt' | 'updatedAt'>): Promise<void> {
+    try {
+      await this.taskService.addTask(task);
+    } catch (error) {
+      console.error('Error adding task:', error);
+      alert('Failed to add task. Please try again.');
+    }
   }
 
-  onDeleteTask(taskId: number): void {
+  async onToggleStatus(taskId: string): Promise<void> {
+    try {
+      const task = this.tasks.find(t => t.id === taskId);
+      if (task) {
+        await this.taskService.updateTask(taskId, { completed: !task.completed });
+      }
+    } catch (error) {
+      console.error('Error toggling task status:', error);
+      alert('Failed to update task. Please try again.');
+    }
+  }
+
+  async onDeleteTask(taskId: string): Promise<void> {
+    console.log('TasksComponent: Requesting delete for task', taskId);
     if (confirm('Are you sure you want to delete this task?')) {
-      this.taskService.deleteTask(taskId);
-      this.tasks = this.taskService.getTasks();
+      try {
+        await this.taskService.deleteTask(taskId);
+      } catch (error) {
+        console.error('Error deleting task:', error);
+        alert('Failed to delete task. Please try again.');
+      }
     }
   }
 

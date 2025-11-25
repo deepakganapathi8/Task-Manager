@@ -12,14 +12,16 @@ import { PriorityLabelPipe } from '../../pipes/priority-label.pipe';
 })
 export class TaskItemComponent {
   @Input() task!: Task;
-  @Output() toggleStatus = new EventEmitter<number>();
-  @Output() deleteTask = new EventEmitter<number>();
+  @Output() toggleStatus = new EventEmitter<string>();
+  @Output() deleteTask = new EventEmitter<string>();
 
   onToggleStatus(): void {
     this.toggleStatus.emit(this.task.id);
   }
 
-  onDelete(): void {
+  onDelete(event: Event): void {
+    event.stopPropagation();
+    console.log('TaskItem: Delete clicked for task', this.task.id);
     this.deleteTask.emit(this.task.id);
   }
 }

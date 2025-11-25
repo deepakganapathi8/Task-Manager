@@ -3,7 +3,8 @@
     <div class="logo">
       <h1>📋 Task Manager</h1>
     </div>
-    <ul class="nav-links">
+
+    <ul class="nav-links" *ngIf="isAuthenticated$ | async">
       <li>
         <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           Home
@@ -20,5 +21,32 @@
         </a>
       </li>
     </ul>
+
+    <div class="user-section" *ngIf="currentUser$ | async as user; else loginLink">
+      <div class="user-profile" (click)="toggleUserMenu()">
+        <div class="user-avatar">
+          <span *ngIf="!user.photoURL">{{ (user.displayName || user.email || 'U')[0].toUpperCase() }}</span>
+          <img *ngIf="user.photoURL" [src]="user.photoURL" [alt]="user.displayName || 'User'">
+        </div>
+        <span class="user-name">{{ user.displayName || user.email }}</span>
+        <span class="dropdown-icon">▼</span>
+      </div>
+
+      <div class="user-menu" *ngIf="showUserMenu">
+        <div class="user-menu-header">
+          <strong>{{ user.displayName }}</strong>
+          <small>{{ user.email }}</small>
+        </div>
+        <div class="user-menu-divider"></div>
+        <button class="menu-item" (click)="signOut()">
+          <span class="menu-icon">🚪</span>
+          Sign Out
+        </button>
+      </div>
+    </div>
+
+    <ng-template #loginLink>
+      <a routerLink="/login" class="login-btn">Sign In</a>
+    </ng-template>
   </div>
 </nav>
