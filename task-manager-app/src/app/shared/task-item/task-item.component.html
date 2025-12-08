@@ -1,21 +1,63 @@
-<div class="task-item" [class.completed]="task.completed">
-  <div class="task-checkbox">
-    <input type="checkbox" [checked]="task.completed" (change)="onToggleStatus()" [id]="'task-' + task.id" />
-    <label [for]="'task-' + task.id"></label>
-  </div>
-
-  <div class="task-content">
-    <h3 [class.completed-text]="task.completed">{{ task.title }}</h3>
-    <p class="task-description">{{ task.description }}</p>
-    <div class="task-meta">
-      <span class="priority-badge" [class]="'priority-' + task.priority">
-        {{ task.priority | priorityLabel }}
-      </span>
-      <span class="task-date">{{ task.createdAt | date:'short' }}</span>
+<div class="task-item" [class.completed]="task.completed" [class.editing]="isEditing">
+  <!-- Display Mode -->
+  <ng-container *ngIf="!isEditing">
+    <div class="task-checkbox">
+      <input type="checkbox" [checked]="task.completed" (change)="onToggleStatus()" [id]="'task-' + task.id" />
+      <label [for]="'task-' + task.id"></label>
     </div>
-  </div>
 
-  <button class="delete-btn" (click)="onDelete($event)" title="Delete task">
-    🗑️
-  </button>
+    <div class="task-content">
+      <h3 [class.completed-text]="task.completed">{{ task.title }}</h3>
+      <p class="task-description">{{ task.description }}</p>
+      <div class="task-meta">
+        <span class="priority-badge" [class]="'priority-' + task.priority">
+          {{ task.priority | priorityLabel }}
+        </span>
+        <span class="task-date">{{ task.createdAt | date:'short' }}</span>
+      </div>
+    </div>
+
+    <div class="task-actions">
+      <button class="edit-btn" (click)="onEdit($event)" title="Edit task">
+        ✏️
+      </button>
+      <button class="delete-btn" (click)="onDelete($event)" title="Delete task">
+        🗑️
+      </button>
+    </div>
+  </ng-container>
+
+  <!-- Edit Mode -->
+  <ng-container *ngIf="isEditing">
+    <div class="edit-form">
+      <div class="form-group">
+        <label for="edit-title">Title</label>
+        <input type="text" id="edit-title" [(ngModel)]="editForm.title" placeholder="Task title" class="edit-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="edit-description">Description</label>
+        <textarea id="edit-description" [(ngModel)]="editForm.description" placeholder="Task description"
+          class="edit-textarea" rows="2"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="edit-priority">Priority</label>
+        <select id="edit-priority" [(ngModel)]="editForm.priority" class="edit-select">
+          <option value="low">🟢 Low</option>
+          <option value="medium">🟡 Medium</option>
+          <option value="high">🔴 High</option>
+        </select>
+      </div>
+
+      <div class="edit-actions">
+        <button class="save-btn" (click)="onSave($event)" [disabled]="!editForm.title.trim()">
+          Save
+        </button>
+        <button class="cancel-btn" (click)="onCancel($event)">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </ng-container>
 </div>

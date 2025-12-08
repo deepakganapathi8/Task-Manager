@@ -90,6 +90,15 @@ export class TasksComponent implements OnInit, OnDestroy {
     }
   }
 
+  async onEditTask(data: { taskId: string, updates: Partial<Task> }): Promise<void> {
+    try {
+      await this.taskService.updateTask(data.taskId, data.updates);
+    } catch (error) {
+      console.error('Error editing task:', error);
+      alert('Failed to update task. Please try again.');
+    }
+  }
+
   setFilter(filter: string): void {
     this.currentFilter = filter;
   }

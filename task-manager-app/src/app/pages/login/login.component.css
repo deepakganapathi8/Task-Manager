@@ -1,7 +1,8 @@
 .login-container {
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 50% 50%;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
@@ -12,6 +13,20 @@
   align-items: center;
   padding: 2rem;
   background: white;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.login-card::-webkit-scrollbar {
+  display: none;
 }
 
 .logo-section {
@@ -26,9 +41,12 @@
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -50,6 +68,10 @@
 .form-section {
   width: 100%;
   max-width: 400px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
 }
 
 .mode-tabs {
@@ -80,6 +102,28 @@
 
 .mode-tabs button:hover {
   color: #667eea;
+}
+
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .form-group {
@@ -115,6 +159,61 @@
   cursor: not-allowed;
 }
 
+/* Password field with toggle */
+.password-field .password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-field .password-input-wrapper input {
+  padding-right: 3rem;
+}
+
+.password-field .toggle-password {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.6;
+  border-radius: 50%;
+}
+
+.password-field .toggle-password:hover:not(:disabled) {
+  opacity: 1;
+  transform: scale(1.15);
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.password-field .toggle-password:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.password-field .toggle-password:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+.password-field .toggle-password .emoji-icon {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.password-field .toggle-password:hover:not(:disabled) .emoji-icon {
+  transform: rotate(15deg) scale(1.1);
+}
+
+.password-field .toggle-password:active:not(:disabled) .emoji-icon {
+  transform: rotate(-5deg) scale(0.9);
+}
+
 .error-message {
   background-color: #fee;
   color: #c33;
@@ -144,6 +243,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   margin-bottom: 1rem;
+  animation: fadeInSlideUp 0.4s ease-out;
 }
 
 .submit-btn:hover:not(:disabled) {
@@ -185,6 +285,7 @@
 .forgot-password {
   text-align: center;
   margin-top: 1rem;
+  animation: fadeIn 0.4s ease-out;
 }
 
 .link {
@@ -204,6 +305,7 @@
   text-align: center;
   margin-top: 2rem;
   color: #666;
+  animation: fadeIn 0.4s ease-out;
 }
 
 .footer-text p {
@@ -216,6 +318,11 @@
   justify-content: center;
   padding: 3rem;
   color: white;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 100vh;
 }
 
 .features-section h2 {

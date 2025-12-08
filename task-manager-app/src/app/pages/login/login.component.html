@@ -7,72 +7,39 @@
     </div>
 
     <div class="form-section">
-      <div class="mode-tabs">
-        <button 
-          [class.active]="isLoginMode" 
-          (click)="toggleMode()"
-          type="button">
-          Sign In
-        </button>
-        <button 
-          [class.active]="!isLoginMode" 
-          (click)="toggleMode()"
-          type="button">
-          Sign Up
-        </button>
-      </div>
-
       <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
         <!-- Display Name (Registration only) -->
-        <div class="form-group" *ngIf="!isLoginMode">
+        <div class="form-group" *ngIf="!isLoginMode" @fadeSlide>
           <label for="displayName">Full Name</label>
-          <input
-            type="text"
-            id="displayName"
-            name="displayName"
-            [(ngModel)]="displayName"
-            placeholder="Enter your name"
-            [disabled]="isLoading"
-            required>
+          <input type="text" id="displayName" name="displayName" [(ngModel)]="displayName" placeholder="Enter your name"
+            [disabled]="isLoading" required>
         </div>
 
         <!-- Email -->
         <div class="form-group">
           <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            [(ngModel)]="email"
-            placeholder="Enter your email"
-            [disabled]="isLoading"
-            required>
+          <input type="email" id="email" name="email" [(ngModel)]="email" placeholder="Enter your email"
+            [disabled]="isLoading" required>
         </div>
 
         <!-- Password -->
-        <div class="form-group">
+        <div class="form-group password-field">
           <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            [(ngModel)]="password"
-            placeholder="Enter your password"
-            [disabled]="isLoading"
-            required>
+          <div class="password-input-wrapper">
+            <input [type]="showPassword ? 'text' : 'password'" id="password" name="password" [(ngModel)]="password"
+              placeholder="Enter your password" [disabled]="isLoading" required>
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility()" [disabled]="isLoading"
+              tabindex="-1" [title]="showPassword ? 'Hide Password' : 'Show Password'">
+              <span class="emoji-icon">{{ showPassword ? '🙈' : '🐵' }}</span>
+            </button>
+          </div>
         </div>
 
         <!-- Confirm Password (Registration only) -->
-        <div class="form-group" *ngIf="!isLoginMode">
+        <div class="form-group" *ngIf="!isLoginMode" @fadeSlide>
           <label for="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            [(ngModel)]="confirmPassword"
-            placeholder="Confirm your password"
-            [disabled]="isLoading"
-            required>
+          <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword"
+            placeholder="Confirm your password" [disabled]="isLoading" required>
         </div>
 
         <!-- Error Message -->
@@ -82,10 +49,7 @@
         </div>
 
         <!-- Submit Button -->
-        <button 
-          type="submit" 
-          class="submit-btn"
-          [disabled]="isLoading">
+        <button type="submit" class="submit-btn" [disabled]="isLoading">
           <span *ngIf="!isLoading">
             {{ isLoginMode ? 'Sign In' : 'Create Account' }}
           </span>
@@ -96,18 +60,18 @@
         </button>
 
         <!-- Forgot Password (Login only) -->
-        <div class="forgot-password" *ngIf="isLoginMode">
+        <div class="forgot-password" *ngIf="isLoginMode" @fadeSlide>
           <a (click)="onForgotPassword()" class="link">Forgot password?</a>
         </div>
       </form>
 
       <div class="footer-text">
         <p *ngIf="isLoginMode">
-          Don't have an account? 
+          Don't have an account?
           <a (click)="toggleMode()" class="link">Sign up</a>
         </p>
         <p *ngIf="!isLoginMode">
-          Already have an account? 
+          Already have an account?
           <a (click)="toggleMode()" class="link">Sign in</a>
         </p>
       </div>

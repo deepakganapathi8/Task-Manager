@@ -15,11 +15,6 @@
           Tasks
         </a>
       </li>
-      <li>
-        <a routerLink="/about" routerLinkActive="active">
-          About
-        </a>
-      </li>
     </ul>
 
     <div class="user-section" *ngIf="currentUser$ | async as user; else loginLink">

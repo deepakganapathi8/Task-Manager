@@ -1,18 +1,30 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  animations: [
+    trigger('fadeSlide', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(10px)', height: 0, overflow: 'hidden' }),
+        animate('400ms cubic-bezier(0.4, 0, 0.2, 1)', style({ opacity: 1, transform: 'translateY(0)', height: '*' }))
+      ]),
+      transition(':leave', [
+        animate('400ms cubic-bezier(0.4, 0, 1, 1)', style({ opacity: 0, transform: 'translateY(-5px)', height: 0, overflow: 'hidden' }))
+      ])
+    ])
+  ]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private authService = inject(AuthService);
   private userService = inject(UserService);
   private router = inject(Router);
@@ -20,12 +32,21 @@ export class LoginComponent {
   isLoginMode = true;
   isLoading = false;
   errorMessage = '';
+  showPassword = false;
+  showConfirmPassword = false;
 
   // Form fields
   email = '';
   password = '';
   displayName = '';
   confirmPassword = '';
+
+  ngOnInit() {
+    // Redirect to tasks if user is already authenticated
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/tasks']);
+    }
+  }
 
   toggleMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -71,7 +92,7 @@ export class LoginComponent {
           await this.userService.createOrUpdateUserProfile(user);
         }
 
-        this.router.navigate(['/tasks']);
+        this.router.navigate(['/home']);
       } else {
         // Register
         await this.authService.register(this.email, this.password, this.displayName);
@@ -83,7 +104,7 @@ export class LoginComponent {
           await this.userService.createOrUpdateUserProfile(user);
         }
 
-        this.router.navigate(['/tasks']);
+        this.router.navigate(['/home']);
       }
     } catch (error: any) {
       this.errorMessage = error.message || 'An error occurred. Please try again.';
@@ -109,6 +130,14 @@ export class LoginComponent {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
   private clearForm() {

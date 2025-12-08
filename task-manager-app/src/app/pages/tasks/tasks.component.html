@@ -9,12 +9,8 @@
 
   <!-- Filter Buttons -->
   <div class="filters">
-    <button
-      *ngFor="let filter of filters"
-      [class.active]="currentFilter === filter.value"
-      (click)="setFilter(filter.value)"
-      class="filter-btn"
-    >
+    <button *ngFor="let filter of filters" [class.active]="currentFilter === filter.value"
+      (click)="setFilter(filter.value)" class="filter-btn">
       {{ filter.label }}
     </button>
   </div>
@@ -31,12 +27,9 @@
     </div>
 
     <!-- Task Items with Input/Output bindings -->
-    <app-task-item
-      *ngFor="let task of tasks | taskFilter:currentFilter"
-      [task]="task"
-      (toggleStatus)="onToggleStatus($event)"
-      (deleteTask)="onDeleteTask($event)"
-    ></app-task-item>
+    <app-task-item *ngFor="let task of tasks | taskFilter:currentFilter" [task]="task"
+      (toggleStatus)="onToggleStatus($event)" (deleteTask)="onDeleteTask($event)"
+      (editTask)="onEditTask($event)"></app-task-item>
   </div>
 
   <!-- Stats Section -->
