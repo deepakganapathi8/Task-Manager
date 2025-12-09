@@ -28,15 +28,121 @@
       </div>
 
       <div class="user-menu" *ngIf="showUserMenu">
-        <div class="user-menu-header">
-          <strong>{{ user.displayName }}</strong>
-          <small>{{ user.email }}</small>
+        <!-- View Mode -->
+        <div *ngIf="!isEditMode">
+          <div class="user-menu-header">
+            <strong>{{ user.displayName }}</strong>
+            <small>{{ user.email }}</small>
+          </div>
+          <div class="user-menu-divider"></div>
+          <button class="menu-item" (click)="editProfile(user)">
+            <span class="menu-icon">✏️</span>
+            Edit Profile
+          </button>
+          <button class="menu-item" (click)="signOut()">
+            <span class="menu-icon">🚪</span>
+            Sign Out
+          </button>
         </div>
-        <div class="user-menu-divider"></div>
-        <button class="menu-item" (click)="signOut()">
-          <span class="menu-icon">🚪</span>
-          Sign Out
-        </button>
+
+        <!-- Edit Mode -->
+        <div *ngIf="isEditMode" class="edit-form">
+          <div class="edit-form-header">
+            <strong>Edit Profile</strong>
+          </div>
+          <div class="user-menu-divider"></div>
+
+          <!-- Success/Error Messages -->
+          <div *ngIf="successMessage" class="message success-message">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="message error-message">
+            {{ errorMessage }}
+          </div>
+
+          <div class="form-content">
+            <!-- Display Name -->
+            <div class="form-group">
+              <label for="editDisplayName">Display Name</label>
+              <input
+                type="text"
+                id="editDisplayName"
+                [(ngModel)]="editDisplayName"
+                placeholder="Enter your name"
+                [disabled]="isLoading"
+              />
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="editEmail">Email</label>
+              <input
+                type="email"
+                id="editEmail"
+                [(ngModel)]="editEmail"
+                placeholder="Enter your email"
+                [disabled]="isLoading"
+              />
+            </div>
+
+            <!-- Password Section -->
+            <div class="password-section">
+              <div class="section-label">Change Password (Optional)</div>
+              
+              <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <input
+                  type="password"
+                  id="currentPassword"
+                  [(ngModel)]="currentPassword"
+                  placeholder="Enter current password"
+                  [disabled]="isLoading"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input
+                  type="password"
+                  id="newPassword"
+                  [(ngModel)]="newPassword"
+                  placeholder="Enter new password"
+                  [disabled]="isLoading"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  [(ngModel)]="confirmPassword"
+                  placeholder="Confirm new password"
+                  [disabled]="isLoading"
+                />
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="form-actions">
+              <button
+                class="btn-primary"
+                (click)="saveProfile(user)"
+                [disabled]="isLoading"
+              >
+                <span *ngIf="!isLoading">Save Changes</span>
+                <span *ngIf="isLoading">Saving...</span>
+              </button>
+              <button
+                class="btn-secondary"
+                (click)="cancelEdit()"
+                [disabled]="isLoading"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

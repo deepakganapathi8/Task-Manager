@@ -99,4 +99,15 @@ export class UserService {
             throw error;
         }
     }
+
+    // Update user email in Firestore
+    async updateUserEmail(uid: string, email: string): Promise<void> {
+        try {
+            const userRef = doc(this.firestore, `users/${uid}`);
+            await updateDoc(userRef, { email });
+        } catch (error) {
+            console.error('Error updating email:', error);
+            throw error;
+        }
+    }
 }

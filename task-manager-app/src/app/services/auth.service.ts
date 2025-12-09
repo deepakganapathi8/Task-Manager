@@ -6,7 +6,11 @@ import {
     signInWithEmailAndPassword,
     signOut,
     updateProfile,
+    updateEmail,
+    updatePassword,
     sendPasswordResetEmail,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
     User as FirebaseUser
 } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
@@ -67,6 +71,64 @@ export class AuthService {
     async resetPassword(email: string): Promise<void> {
         try {
             await sendPasswordResetEmail(this.auth, email);
+        } catch (error: any) {
+            throw this.handleAuthError(error);
+        }
+    }
+
+    // Update user profile (display name)
+    async updateUserProfile(displayName: string): Promise<void> {
+        try {
+            const user = this.auth.currentUser;
+            if (!user) {
+                throw new Error('No user is currently signed in.');
+            }
+            await updateProfile(user, { displayName });
+        } catch (error: any) {
+            throw this.handleAuthError(error);
+        }
+    }
+
+    // Update user email
+    async updateUserEmail(newEmail: string): Promise<void> {
+        try {
+            const user = this.auth.currentUser;
+            if (!user) {
+                throw new Error('No user is currently signed in.');
+            }
+            await updateEmail(user, newEmail);
+        } catch (error: any) {
+            throw this.handleAuthError(error);
+        }
+    }
+
+    // Re-authenticate user with password
+    async reauthenticateUser(password: string): Promise<void> {
+        try {
+            const user = this.auth.currentUser;
+            if (!user || !user.email) {
+                throw new Error('No user is currently signed in.');
+            }
+            const credential = EmailAuthProvider.credential(user.email, password);
+            await reauthenticateWithCredential(user, credential);
+        } catch (error: any) {
+            throw this.handleAuthError(error);
+        }
+    }
+
+    // Update user password
+    async updateUserPassword(currentPassword: string, newPassword: string): Promise<void> {
+        try {
+            const user = this.auth.currentUser;
+            if (!user) {
+                throw new Error('No user is currently signed in.');
+            }
+
+            // Re-authenticate before changing password
+            await this.reauthenticateUser(currentPassword);
+
+            // Update password
+            await updatePassword(user, newPassword);
         } catch (error: any) {
             throw this.handleAuthError(error);
         }
