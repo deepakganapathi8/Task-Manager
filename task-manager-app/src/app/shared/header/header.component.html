@@ -27,7 +27,7 @@
         <span class="dropdown-icon">▼</span>
       </div>
 
-      <div class="user-menu" *ngIf="showUserMenu">
+      <div class="user-menu" *ngIf="showUserMenu" (click)="$event.stopPropagation()">
         <!-- View Mode -->
         <div *ngIf="!isEditMode">
           <div class="user-menu-header">
@@ -64,80 +64,47 @@
             <!-- Display Name -->
             <div class="form-group">
               <label for="editDisplayName">Display Name</label>
-              <input
-                type="text"
-                id="editDisplayName"
-                [(ngModel)]="editDisplayName"
-                placeholder="Enter your name"
-                [disabled]="isLoading"
-              />
+              <input type="text" id="editDisplayName" [(ngModel)]="editDisplayName" placeholder="Enter your name"
+                [disabled]="isLoading" />
             </div>
 
             <!-- Email -->
             <div class="form-group">
               <label for="editEmail">Email</label>
-              <input
-                type="email"
-                id="editEmail"
-                [(ngModel)]="editEmail"
-                placeholder="Enter your email"
-                [disabled]="isLoading"
-              />
+              <input type="email" id="editEmail" [(ngModel)]="editEmail" placeholder="Enter your email"
+                [disabled]="isLoading" />
             </div>
 
             <!-- Password Section -->
             <div class="password-section">
               <div class="section-label">Change Password (Optional)</div>
-              
+
               <div class="form-group">
                 <label for="currentPassword">Current Password</label>
-                <input
-                  type="password"
-                  id="currentPassword"
-                  [(ngModel)]="currentPassword"
-                  placeholder="Enter current password"
-                  [disabled]="isLoading"
-                />
+                <input type="password" id="currentPassword" [(ngModel)]="currentPassword"
+                  placeholder="Enter current password" [disabled]="isLoading" />
               </div>
 
               <div class="form-group">
                 <label for="newPassword">New Password</label>
-                <input
-                  type="password"
-                  id="newPassword"
-                  [(ngModel)]="newPassword"
-                  placeholder="Enter new password"
-                  [disabled]="isLoading"
-                />
+                <input type="password" id="newPassword" [(ngModel)]="newPassword" placeholder="Enter new password"
+                  [disabled]="isLoading" />
               </div>
 
               <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  [(ngModel)]="confirmPassword"
-                  placeholder="Confirm new password"
-                  [disabled]="isLoading"
-                />
+                <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword"
+                  placeholder="Confirm new password" [disabled]="isLoading" />
               </div>
             </div>
 
             <!-- Action Buttons -->
             <div class="form-actions">
-              <button
-                class="btn-primary"
-                (click)="saveProfile(user)"
-                [disabled]="isLoading"
-              >
+              <button class="btn-primary" (click)="saveProfile(user)" [disabled]="isLoading">
                 <span *ngIf="!isLoading">Save Changes</span>
                 <span *ngIf="isLoading">Saving...</span>
               </button>
-              <button
-                class="btn-secondary"
-                (click)="cancelEdit()"
-                [disabled]="isLoading"
-              >
+              <button class="btn-secondary" (click)="cancelEdit()" [disabled]="isLoading">
                 Cancel
               </button>
             </div>
